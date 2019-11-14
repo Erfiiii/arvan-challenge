@@ -16,7 +16,7 @@
           />
         </div>
         <div class="form-label-group p1 mt-4">
-          <div class="text m-2">password</div>
+          <div class="text m-2">Password</div>
           <input
             type="password"
             id="inputPassword"
@@ -40,7 +40,7 @@
 
 <script>
 export default {
-  name: "login"
+  name: "register"
 };
 </script>
 

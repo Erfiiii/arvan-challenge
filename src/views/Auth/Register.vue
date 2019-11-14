@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="row login justify-content-center align-items-center">
-      <form class="form-signin rounded">
+      <form class="form-signin rounded" @submit.prevent="onRegister">
         <div class="text-center mb-4">
           <h1 class="h1 m-3 text-secondary font-weight-ligh">REGISTER</h1>
         </div>
@@ -12,6 +12,7 @@
             id="inputUser"
             class="form-control"
             required
+            v-model="username"
           />
         </div>
 
@@ -23,6 +24,7 @@
             class="form-control"
             required
             autofocus
+            v-model="email"
           />
         </div>
         <div class="form-label-group p1 mt-4">
@@ -32,9 +34,10 @@
             id="inputPassword"
             class="form-control"
             required
+            v-model="password"
           />
         </div>
-        <button class="btn btn-lg btn-primary btn-block mt-3" type="submit">
+        <button class="btn btn-lg btn-primary btn-block mt-3" type="submit" :disabled='buttonDisabled'>
           <span>Register</span>
         </button>
         <div class="d-flex mt-1">
@@ -50,7 +53,24 @@
 
 <script>
 export default {
-  name: "login"
+  name: "login",
+  data() {
+    return {
+      username: '',
+      email: '',
+      password: '',
+    }
+  },
+  computed: {
+    buttonDisabled() {
+      return !this.email || !this.password || !this.username;
+    }
+  },
+  methods: {
+    onRegister() {
+      
+    }
+  }
 };
 </script>
 

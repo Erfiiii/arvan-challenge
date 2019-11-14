@@ -1,7 +1,7 @@
 import axios from "axios";
 
 export class HttpService {
-  processHeader(header) {
+  static processHeader(header) {
     const requestHeader = header ? header : {};
     if (localStorage.getItem("token")) {
       requestHeader.Authorization = `Token ${localStorage.getItem("token")}`;
@@ -11,7 +11,7 @@ export class HttpService {
   }
 
   static async getRequest(path, data, header) {
-    this.processHeader(header);
+    HttpService.processHeader(header);
 
     try {
       let res = await axios.get(path, header);
@@ -22,7 +22,7 @@ export class HttpService {
   }
 
   static async postRequest(path, data, header) {
-    this.processHeader(header);
+    HttpService.processHeader(header);
 
     try {
       let res = await axios.post(path, data, header);
@@ -33,7 +33,7 @@ export class HttpService {
   }
 
   static async putRequest(path, data, header) {
-    this.processHeader(header);
+    HttpService.processHeader(header);
 
     try {
       let res = await axios.put(path, data, header);
@@ -44,7 +44,7 @@ export class HttpService {
   }
 
   static async deleteRequest(path, header) {
-    this.processHeader(header);
+    HttpService.processHeader(header);
 
     try {
       let res = await axios.get(path, data);

@@ -13,6 +13,11 @@ const routes = [
     name: 'ROUTE_REGISTER',
     path: '/register',
     component: ()=>import('../views/Auth/Register.vue'),
+  },
+  {
+    name: 'ROUTE_HOME',
+    path: '/',
+    component: ()=> import('../views/Home.vue')
   }
 ]
 

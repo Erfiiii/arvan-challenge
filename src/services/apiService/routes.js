@@ -21,14 +21,13 @@ export const Endpoints = {
   ROUTE_DELETE_ARTICLE,
   DOMAIN,
   get(endpoint, props) {
-    endpoint = endpoints[endpoint];
 
-    if (hasValue(props)) {
+    if (props) {
       for (const [prop, value] of Object.entries(props)) {
         endpoint = endpoint.replace(`:${prop}`, value);
       }
     }
 
-    return Endpoint.DOMAIN + endpoint;
+    return DOMAIN + endpoint;
   }
 };

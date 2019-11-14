@@ -37,7 +37,11 @@
             v-model="password"
           />
         </div>
-        <button class="btn btn-lg btn-primary btn-block mt-3" type="submit" :disabled='buttonDisabled'>
+        <button
+          class="btn btn-lg btn-primary btn-block mt-3"
+          type="submit"
+          :disabled="buttonDisabled"
+        >
           <span>Register</span>
         </button>
         <div class="d-flex mt-1">
@@ -56,10 +60,10 @@ export default {
   name: "login",
   data() {
     return {
-      username: '',
-      email: '',
-      password: '',
-    }
+      username: "",
+      email: "",
+      password: ""
+    };
   },
   computed: {
     buttonDisabled() {
@@ -67,8 +71,20 @@ export default {
     }
   },
   methods: {
-    onRegister() {
-      
+    async onRegister() {
+      let data = {
+        user: {
+          username: this.username,
+          password: this.password,
+          email: this.email
+        }
+      };
+      try {
+        await this.$store.dispatch("registerUser", data);
+        this.$router.push({ name: "ROUTE_HOME" });
+      } catch (error) {
+        throw error;
+      }
     }
   }
 };

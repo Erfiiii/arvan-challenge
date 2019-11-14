@@ -29,6 +29,20 @@ export default new Vuex.Store({
         }).catch(e=> {
           reject(e)
         })
+      })
+    },
+    loginUser({ commit }, data) {
+      return new Promise((resolve, reject) => {
+        HttpService.postRequest(
+          Endpoints.get(Endpoints.ROUTE_LOGIN),
+          data
+        ).then(({ user }) => {
+          localStorage.setItem("token", user.token);
+          commit("addUserAndToken", user);
+          resolve();
+        }).catch(e=> {
+          reject(e)
+        })
       });
     }
   },

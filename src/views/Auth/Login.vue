@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="row login justify-content-center align-items-center">
-      <form class="form-signin rounded">
+      <form class="form-signin rounded" @submit.prevent="onLogin">
         <div class="text-center mb-4">
           <h1 class="h1 m-3 text-secondary font-weight-ligh">LOGIN</h1>
         </div>
@@ -13,6 +13,7 @@
             class="form-control"
             required
             autofocus
+            v-model="email"
           />
         </div>
         <div class="form-label-group p1 mt-4">
@@ -22,6 +23,7 @@
             id="inputPassword"
             class="form-control"
             required
+            v-model="password"
           />
         </div>
         <button class="btn btn-lg btn-primary btn-block mt-3" type="submit">
@@ -40,7 +42,34 @@
 
 <script>
 export default {
-  name: "register"
+  name: "register",
+  data() {
+    return {
+      email: "",
+      password: ""
+    };
+  },
+  computed: {
+    buttonDisabled() {
+      return !this.email || !this.password;;
+    }
+  },
+  methods: {
+    async onLogin() {
+      let data = {
+        user: {
+          password: this.password,
+          email: this.email
+        }
+      };
+      try {
+        await this.$store.dispatch("loginUser", data);
+        this.$router.push({ name: "ROUTE_HOME" });
+      } catch (error) {
+        throw error;
+      }
+    }
+  }
 };
 </script>
 

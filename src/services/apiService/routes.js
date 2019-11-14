@@ -1,5 +1,5 @@
 const ROUTE_REGISTER = "/users";
-const ROUTE_LOGIN = "/user/login";
+const ROUTE_LOGIN = "/users/login";
 const ROUTE_USER = "/user";
 const ROUTE_GET_USER_ARTICLES =
   "/articles?author=:username&limit=10&offset=:oddset";

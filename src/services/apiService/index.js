@@ -11,10 +11,10 @@ export class HttpService {
   }
 
   static async getRequest(path, data, header) {
-    HttpService.processHeader(header);
+    let requestHeader = HttpService.processHeader(header);
 
     try {
-      let res = await axios.get(path, header);
+      let res = await axios.get(path, { headers: requestHeader });
       return res.data;
     } catch (error) {
       throw error;
@@ -22,10 +22,10 @@ export class HttpService {
   }
 
   static async postRequest(path, data, header) {
-    HttpService.processHeader(header);
+    let requestHeader = HttpService.processHeader(header);
 
     try {
-      let res = await axios.post(path, data, header);
+      let res = await axios.post(path, data, { headers: requestHeader });
       return res.data;
     } catch (error) {
       throw error;
@@ -33,10 +33,10 @@ export class HttpService {
   }
 
   static async putRequest(path, data, header) {
-    HttpService.processHeader(header);
+    let requestHeader = HttpService.processHeader(header);
 
     try {
-      let res = await axios.put(path, data, header);
+      let res = await axios.put(path, data, { headers: requestHeader });
       return res.data;
     } catch (error) {
       throw error;
@@ -44,10 +44,10 @@ export class HttpService {
   }
 
   static async deleteRequest(path, header) {
-    HttpService.processHeader(header);
+    let requestHeader = HttpService.processHeader(header);
 
     try {
-      let res = await axios.get(path, data);
+      let res = await axios.get(path, data, { headers: requestHeader });
       return res.data;
     } catch (error) {
       throw error;

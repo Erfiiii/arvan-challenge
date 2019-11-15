@@ -14,8 +14,8 @@
       </li>
       <li class="nav-item">
         <router-link
-          :class="{ active: route === 'ROUTE_NEW_ARTICLE' }"
-          :to="{ name: 'ROUTE_NEW_ARTICLE' }"
+          :class="{ active: route === 'ROUTE_ADD_ARTICLE' }"
+          :to="{ name: 'ROUTE_ADD_ARTICLE' }"
           class="nav-link text-white"
           >New Article</router-link
         >
@@ -27,7 +27,7 @@
 <script>
 export default {
   name: "sidebar",
-  computed: {
+  computed: { 
     route() {
       return this.$route.name;
     }

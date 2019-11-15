@@ -64,6 +64,8 @@ export default {
       };
       try {
         await this.$store.dispatch("loginUser", data);
+          this.displayNotification('SUCCESS', 'Well Done! you logged in successfully!')
+
         this.$router.push({ name: "ROUTE_HOME" });
       } catch (error) {
         throw error;

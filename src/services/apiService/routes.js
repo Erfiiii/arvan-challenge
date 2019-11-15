@@ -5,6 +5,7 @@ const ROUTE_GET_USER_ARTICLES =
   "/articles?author=:username&limit=10&offset=:offset";
 const ROUTE_GET_TAGS = "/tags";
 const ROUTE_ADD_ARTICLE = "/articles";
+const ROUTE_EDIT_ARTICLE = "/articles/:slug";
 const ROUTE_GET_ARTICLE_BY_SLUG = "/articles/:slug";
 const ROUTE_DELETE_ARTICLE = "/articles/:slug";
 
@@ -19,6 +20,7 @@ export const Endpoints = {
   ROUTE_ADD_ARTICLE,
   ROUTE_GET_ARTICLE_BY_SLUG,
   ROUTE_DELETE_ARTICLE,
+  ROUTE_EDIT_ARTICLE,
   DOMAIN,
   get(endpoint, props) {
 

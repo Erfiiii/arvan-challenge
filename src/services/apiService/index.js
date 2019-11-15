@@ -47,8 +47,8 @@ export class HttpService {
     let requestHeader = HttpService.processHeader(header);
 
     try {
-      let res = await axios.get(path, data, { headers: requestHeader });
-      return res.data;
+      let res = await axios.delete(path, { headers: requestHeader });
+      return res;
     } catch (error) {
       throw error;
     }

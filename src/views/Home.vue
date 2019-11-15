@@ -95,6 +95,7 @@
                           data-toggle="modal"
                           data-target="#exampleModalCenter"
                           class="dropdown-item"
+                          @click="onDeleteAction(article.slug)"
                         >
                           Delete
                         </button>
@@ -146,17 +147,59 @@
         </nav>
       </main>
     </div>
+    <modal-cm ref="articleDeleteModal">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title font-weight-bold" id="modalTitle">
+              Delete Article
+            </h5>
+            <button
+              type="button"
+              class="close"
+              data-dismiss="modal"
+              aria-label="Close"
+              @click="onCloseDeleteModal"
+            >
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            Are you sure to delete Article?
+          </div>
+          <div class="modal-footer">
+            <button
+              class="btn border px-4"
+              type="button"
+              @click="onCloseDeleteModal"
+              data-dismiss="modal"
+            >
+              No
+            </button>
+            <button
+              @click="onDeleteArticle"
+              type="button"
+              class="btn btn-danger px-4"
+            >
+              Yes
+            </button>
+          </div>
+        </div>
+      </div>
+    </modal-cm>
   </div>
 </template>
 
 <script>
 import { mapState } from "vuex";
 
+import ModalCm from "../components/Modal";
+
 import { HttpService } from "../services/apiService";
 import { Endpoints } from "../services/apiService/routes";
 
 export default {
-  name: "home",
+  name: "Home",
   data() {
     return {
       articles: [],
@@ -181,11 +224,14 @@ export default {
       return this.pageNumber - 1 > 0;
     },
     canGoForward() {
-      return this.pageNumber+1 <= this.totalPageCount;
+      return this.pageNumber + 1 <= this.totalPageCount;
     },
     offsetForRequest() {
       return this.pageNumber ? (this.pageNumber - 1) * 10 : 0;
     }
+  },
+  components: {
+    ModalCm
   },
   watch: {
     pageNumber: async function(val) {
@@ -215,7 +261,7 @@ export default {
       this.articles = response.articles;
       this.articlesCount = response.articlesCount;
       if (this.articlesCount > 10) {
-        this.$router.push({name: 'ROUTE_ARTICLES', params: {page: 1}});
+        this.$router.push({ name: "ROUTE_ARTICLES", params: { page: 1 } });
       }
       this.isLoading = false;
     } catch (error) {
@@ -223,7 +269,37 @@ export default {
       throw error;
     }
   },
-  methods: {}
+  methods: {
+    onDeleteAction(slug) {
+      this.selectedToDeleteSlug = slug;
+      this.$refs.articleDeleteModal.open();
+    },
+    async onDeleteArticle() {
+      try {
+        this.isLoading = true;
+        await HttpService.deleteRequest(
+          Endpoints.get(Endpoints.ROUTE_DELETE_ARTICLE, {
+            slug: this.selectedToDeleteSlug
+          })
+        );
+        this.$refs.articleDeleteModal.close();
+        let response = await HttpService.getRequest(
+          Endpoints.get(Endpoints.ROUTE_GET_USER_ARTICLES, {
+            username: this.user.username,
+            offset: this.offsetForRequest
+          })
+        );
+        this.articles = response.articles;
+        this.articlesCount = response.articlesCount;
+        this.isLoading = false;
+      } catch (error) {
+        throw error;
+      }
+    },
+    onCloseDeleteModal() {
+      this.selectedToDeleteSlug = null;
+    }
+  }
 };
 </script>
 

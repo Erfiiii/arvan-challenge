@@ -54,12 +54,12 @@
                     @{{ article.author.username }}
                   </td>
                   <td class="inline-block px-2 py-3 align-middle">
-                    <span v-for="tag in article.tagList" :key="tag"
-                      >{{ tag }},
+                    <span 
+                      >{{ article.tagList.join(', ') }}
                     </span>
                   </td>
                   <td class="inline-block px-2 py-3 align-middle">
-                    {{ article.body }}
+                    {{article.body | truncate(20)}}
                   </td>
                   <td class="inline-block px-2 py-3 align-middle">
                     <span

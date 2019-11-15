@@ -1,5 +1,6 @@
 <template>
   <div
+    v-click-outside='closeNotification'
     role="alert"
     :class="{
       'is-active': status,

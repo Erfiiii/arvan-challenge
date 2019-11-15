@@ -19,7 +19,15 @@ export default new Vuex.Store({
     addUserAndToken(state, data) {
       state.user = data;
       state.token = data.token;
-    }
+    },
+    removeToken(state) {
+      try {
+        localStorage.removeItem('token')
+        state.token = null;
+      } catch (error) {
+        localStorage.removeItem('token')
+      }
+    } 
   },
   actions: {
     registerUser({ commit }, data) {
@@ -60,6 +68,10 @@ export default new Vuex.Store({
           reject(e);
         })
       })
-    }
+    },
+
+    removeToken({commit}) {
+      commit('removeToken')
+    },
   }
 });

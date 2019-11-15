@@ -5,12 +5,13 @@
         >Arvan challenge</span
       >
       <span class="text col-sm-3 col-md-2 d-inline text-white font-weight-light"
-        >Wellcome {{username}}</span
+        >Wellcome {{ username }}</span
       >
     </div>
     <ul class="navbar-nav px-3 py-2">
       <li class="nav-item text-nowrap">
         <button
+          @click="logout"
           class="nav-link btn text-info py-1 px-2 rounded border border-info"
         >
           Logout
@@ -26,6 +27,16 @@ export default {
   props: {
     username: {
       type: String
+    }
+  },
+  methods: {
+    logout() {
+      try {
+        this.$store.dispatch("removeToken");
+        this.$router.push({ name: "ROUTE_LOGIN" });
+      } catch (error) {
+        throw error;
+      }
     }
   }
 };

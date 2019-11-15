@@ -20,9 +20,19 @@ const routes = [
     component: () => import("../views/Home.vue")
   },
   {
+    name: "ROUTE_HOME",
+    path: "/articles/page/:page",
+    component: () => import("../views/Home.vue")
+  },
+  {
     name: "ROUTE_ADD_ARTICLE",
     path: "/articles/create",
     component: () => import("../views/Articles/AddArticle.vue")
+  },
+  {
+    name: "ROUTE_EDIT_ARTICLE",
+    path: "/articles/edit/:slug",
+    component: () => import("../views/Articles/EditArticle.vue")
   }
 ];
 

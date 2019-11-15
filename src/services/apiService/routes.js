@@ -2,7 +2,7 @@ const ROUTE_REGISTER = "/users";
 const ROUTE_LOGIN = "/users/login";
 const ROUTE_USER = "/user";
 const ROUTE_GET_USER_ARTICLES =
-  "/articles?author=:username&limit=10&offset=:oddset";
+  "/articles?author=:username&limit=10&offset=:offset";
 const ROUTE_GET_TAGS = "/tags";
 const ROUTE_ADD_ARTICLE = "/articles";
 const ROUTE_GET_ARTICLE_BY_SLUG = "/articles/:slug";

@@ -42,7 +42,7 @@
 
 <script>
 export default {
-  name: "register",
+  name: "login",
   data() {
     return {
       email: "",

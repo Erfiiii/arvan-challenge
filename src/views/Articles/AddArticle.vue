@@ -9,23 +9,11 @@
           <form class="d-lg-flex d-md-flex mt-4">
             <div class="col-sm-12 col-md-7 col-lg-7 mr-5 p-0">
               <div class="form-group">
-                <label>Title</label>
-                <input
-                  v-model="title"
-                  type="text"
-                  class="form-control"
-                  placeholder="Title"
-                />
+              <input-cm label="Title" type="text" :required="true" placeholder="Title" v-model="title"/>
               </div>
 
               <div class="form-group">
-                <label>Description</label>
-                <input
-                  v-model="description"
-                  type="email"
-                  class="form-control"
-                  placeholder="Description"
-                />
+              <input-cm label="Description" type="text" :required="true" placeholder="Description" v-model="description"/>
               </div>
 
               <div class="form-group">
@@ -87,6 +75,8 @@
 import { HttpService } from "../../services/apiService";
 import { Endpoints } from "../../services/apiService/routes";
 
+import InputCm from "../../components/UI/Input";
+
 export default {
   name: "addArticle",
   data() {
@@ -99,6 +89,9 @@ export default {
       selectedTags: [],
       tagLoading: false
     };
+  },
+  components: {
+    InputCm
   },
   async mounted() {
     try {

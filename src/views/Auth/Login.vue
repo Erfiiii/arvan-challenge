@@ -6,28 +6,14 @@
           <h1 class="h1 m-3 text-secondary font-weight-ligh">LOGIN</h1>
         </div>
         <div class="form-label-group mt-4">
-          <div class="text m-2">Email</div>
-          <input
-            type="email"
-            id="inputEmail"
-            class="form-control"
-            required
-            autofocus
-            v-model="email"
-          />
+          <input-cm label="Email" type="email" :required="true" v-model="email"/>
         </div>
         <div class="form-label-group p1 mt-4">
-          <div class="text m-2">Password</div>
-          <input
-            type="password"
-            id="inputPassword"
-            class="form-control"
-            required
-            v-model="password"
-          />
+          <input-cm label="Password" type="password" :required="true" v-model="password"/>
         </div>
-        <button class="btn btn-lg btn-primary btn-block mt-3" type="submit">
-          <span>Login</span>
+        <button class="btn btn-lg btn-primary btn-block mt-3" type="submit" :disabled="buttonDisabled">
+            <span v-if="loadingState" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            <span v-else>Login</span>
         </button>
         <div class="d-flex mt-1">
           <span class="pt-2">Don’t have account? </span>
@@ -41,12 +27,15 @@
 </template>
 
 <script>
+
+import InputCm from '../../components/UI/Input';
 export default {
   name: "login",
   data() {
     return {
       email: "",
-      password: ""
+      password: "",
+      loadingState :false
     };
   },
   computed: {
@@ -54,8 +43,13 @@ export default {
       return !this.email || !this.password;;
     }
   },
+  components: {
+    InputCm
+  },
   methods: {
     async onLogin() {
+      this.loadingState = true;
+
       let data = {
         user: {
           password: this.password,
@@ -67,7 +61,10 @@ export default {
           this.displayNotification('SUCCESS', 'Well Done! you logged in successfully!')
 
         this.$router.push({ name: "ROUTE_HOME" });
+        this.loadingState = false;
+
       } catch (error) {
+        this.loadingState = false;
         throw error;
       }
     }

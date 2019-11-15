@@ -6,43 +6,26 @@
           <h1 class="h1 m-3 text-secondary font-weight-ligh">REGISTER</h1>
         </div>
         <div class="form-label-group mt-4">
-          <div class="text m-2">Username</div>
-          <input
-            type="text"
-            id="inputUser"
-            class="form-control"
-            required
-            v-model="username"
-          />
+          <input-cm label="Username" type="text" :required="true" v-model="username"/>
         </div>
-
         <div class="form-label-group mt-4">
-          <div class="text m-2">Email</div>
-          <input
-            type="email"
-            id="inputEmail"
-            class="form-control"
-            required
-            autofocus
-            v-model="email"
-          />
+          <input-cm label="Email" type="email" :required="true" v-model="email"/>
         </div>
         <div class="form-label-group p1 mt-4">
-          <div class="text m-2">Password</div>
-          <input
-            type="password"
-            id="inputPassword"
-            class="form-control"
-            required
-            v-model="password"
-          />
+          <input-cm label="Password" type="password" :required="true" v-model="password"/>
         </div>
         <button
           class="btn btn-lg btn-primary btn-block mt-3"
           type="submit"
           :disabled="buttonDisabled"
         >
-          <span>Register</span>
+          <span
+            v-if="loadingState"
+            class="spinner-border spinner-border-sm"
+            role="status"
+            aria-hidden="true"
+          ></span>
+          <span v-else>Register</span>
         </button>
         <div class="d-flex mt-1">
           <span class="pt-2">Already Registered? </span>
@@ -56,14 +39,20 @@
 </template>
 
 <script>
+import InputCm from "../../components/UI/Input";
+
 export default {
   name: "login",
   data() {
     return {
       username: "",
       email: "",
-      password: ""
+      password: "",
+      loadingState: false
     };
+  },
+  components: {
+    InputCm
   },
   computed: {
     buttonDisabled() {
@@ -80,9 +69,14 @@ export default {
         }
       };
       try {
+        this.loadingState = true;
         await this.$store.dispatch("registerUser", data);
         this.$router.push({ name: "ROUTE_HOME" });
+        this.loadingState = false;
+
       } catch (error) {
+        this.loadingState = false;
+
         throw error;
       }
     }

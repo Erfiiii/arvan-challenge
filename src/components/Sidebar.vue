@@ -6,7 +6,7 @@
       </li>
       <li class="nav-item">
         <router-link
-          :class="{ active: route === 'ROUTE_HOME' }"
+          :class="{ active: route === 'ROUTE_HOME' || route === 'ROUTE_ARTICLES'}"
           :to="{ name: 'ROUTE_HOME' }"
           class="nav-link text-white"
           >All Articles</router-link

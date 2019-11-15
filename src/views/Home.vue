@@ -215,7 +215,7 @@ export default {
       this.articles = response.articles;
       this.articlesCount = response.articlesCount;
       if (this.articlesCount > 10) {
-        this.$router.push("/articles/page/1");
+        this.$router.push({name: 'ROUTE_ARTICLES', params: {page: 1}});
       }
       this.isLoading = false;
     } catch (error) {

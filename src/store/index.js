@@ -10,6 +10,11 @@ export default new Vuex.Store({
     token: localStorage.getItem("token") || null,
     user: {}
   },
+  getters: {
+    isAuthenticated(state) {
+      return state.token !== null;
+    }
+  },
   mutations: {
     addUserAndToken(state, data) {
       state.user = data;
@@ -44,7 +49,17 @@ export default new Vuex.Store({
           reject(e)
         })
       });
+    },
+    getUser({commit}) {
+      return new Promise((resolve,reject)=> {
+        HttpService.getRequest(Endpoints.get(Endpoints.ROUTE_USER))
+        .then(({user})=> {
+          commit("addUserAndToken",user)
+          resolve()
+        }).catch(e=> {
+          reject(e);
+        })
+      })
     }
-  },
-  modules: {}
+  }
 });

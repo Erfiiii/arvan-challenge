@@ -46,7 +46,7 @@
         </button>
         <div class="d-flex mt-1">
           <span class="pt-2">Already Registered? </span>
-          <router-link :to="{ name: 'ROUTE_REGISTER' }" class="btn pb-0">
+          <router-link :to="{ name: 'ROUTE_LOGIN' }" class="btn pb-0">
             <strong>Login</strong>
           </router-link>
         </div>

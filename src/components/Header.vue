@@ -5,7 +5,7 @@
         >Arvan challenge</span
       >
       <span class="text col-sm-3 col-md-2 d-inline text-white font-weight-light"
-        >Wellcome Erfan</span
+        >Wellcome {{username}}</span
       >
     </div>
     <ul class="navbar-nav px-3 py-2">
@@ -22,6 +22,11 @@
 
 <script>
 export default {
-  name: "header"
+  name: "Header",
+  props: {
+    username: {
+      type: String
+    }
+  }
 };
 </script>

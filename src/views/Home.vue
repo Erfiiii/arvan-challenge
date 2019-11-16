@@ -307,11 +307,11 @@ export default {
   }
 }
 
-@media (max-width: 550px) {
+/* @media (max-width: 550px) {
   .main {
     padding-top: 133px !important;
   }
-}
+} */
 
 .bg-grey-light {
   background-color: #dddddd;

@@ -23,12 +23,15 @@ const General = {
 
   // Global Filters
   Vue.filter('truncate', function(value, length) {
-    const valLength = value.length
-    if(length) {
-      return value.substring(0,length ? length : 10) + (valLength > length ? '...' : '')
+    if ( value ) {
+      const valLength = value.length || 0
+      if(length) {
+        return value.substring(0,length ? length : 10) + (valLength > length ? '...' : '')
+      }
+  
+      return value
     }
 
-    return value
   })
   }
 }

@@ -23,14 +23,12 @@
     <nav>
       <div class="pos-f-t">
         <nav class="navbar navbar-dark bg-dark">
-          <div>
-            <span class="navbar-brand d-inline col-sm-3 col-md-2 mr-0"
-              >Arvan challenge</span
-            >
-            <span class="text col-sm-3 col-md-2 d-inline text-white font-weight-light"
-              >Wellcome {{ username }}</span
-            >
-          </div>
+          <span class="navbar-brand"
+            >Arvan challenge</span
+          >
+          <span class="text d-inline text-white"
+            >Wellcome {{ username | truncate(10) }}</span
+          >
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
@@ -96,12 +94,17 @@ export default {
     }
     .pos-f-t {
       display: block;
-      position: fixed;
+      /* position: fixed;
       top: 0;
-      right: 0;
-      width: 100%;
+      right: 0;*/
+      width: calc(100% + 30px); 
+      margin-left: -15px; 
       z-index: 1000;
     }
+    .pos-f-t .navbar-brand {
+      margin-right: 5px 
+    }
+
     .menu-content {
       display: flex;
       flex-flow: column;

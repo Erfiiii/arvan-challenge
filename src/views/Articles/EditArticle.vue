@@ -196,11 +196,11 @@ export default {
   }
 }
 
-@media (max-width: 550px) {
+/* @media (max-width: 550px) {
   .main {
     padding-top: 133px !important;
   }
-}
+} */
 
 .tag-list {
   max-height: 330px;

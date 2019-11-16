@@ -61,8 +61,9 @@
                   <td class="inline-block px-2 py-3 align-middle">
                     {{article.body | truncate(20)}}
                   </td>
-                  <td class="inline-block px-2 py-3 align-middle">
+                  <td class="inline-block px-2 py-3 align-middle last-col">
                     <span
+                      class="align middle"
                       >{{presentDate(article.updatedAt)}}</span
                     >
                     <div class="dropdown ml-5 float-right">
@@ -234,14 +235,7 @@ export default {
     pageNumber: async function(val) {
       if (val) {
         this.isLoading = true;
-        let response = await HttpService.getRequest(
-          Endpoints.get(Endpoints.ROUTE_GET_USER_ARTICLES, {
-            username: this.user.username,
-            offset: this.offsetForRequest
-          })
-        );
-        this.articles = response.articles;
-        this.articlesCount = response.articlesCount;
+        await this.getArticles();
         this.isLoading = false;
       }
     }
@@ -249,16 +243,9 @@ export default {
   async mounted() {
     try {
       this.isLoading = true;
-      let response = await HttpService.getRequest(
-        Endpoints.get(Endpoints.ROUTE_GET_USER_ARTICLES, {
-          username: this.user.username,
-          offset: this.offsetForRequest
-        })
-      );
-      this.articles = response.articles;
-      this.articlesCount = response.articlesCount;
+      await this.getArticles();
       if (this.articlesCount > 10) {
-        this.$router.push({ name: "ROUTE_ARTICLES", params: { page: 1 } });
+        this.$router.replace({ name: "ROUTE_ARTICLES", params: { page: 1 } });
       }
       this.isLoading = false;
     } catch (error) {
@@ -267,6 +254,20 @@ export default {
     }
   },
   methods: {
+    async getArticles() {
+      try {
+        let response = await HttpService.getRequest(
+        Endpoints.get(Endpoints.ROUTE_GET_USER_ARTICLES, {
+          username: this.user.username,
+          offset: this.offsetForRequest
+        })
+      );
+      this.articles = response.articles;
+      this.articlesCount = response.articlesCount;
+      } catch (error) {
+        throw error;
+      }
+    },
     onDeleteAction(slug) {
       this.selectedToDeleteSlug = slug;
       this.$refs.articleDeleteModal.open();
@@ -280,14 +281,7 @@ export default {
           })
         );
         this.$refs.articleDeleteModal.close();
-        let response = await HttpService.getRequest(
-          Endpoints.get(Endpoints.ROUTE_GET_USER_ARTICLES, {
-            username: this.user.username,
-            offset: this.offsetForRequest
-          })
-        );
-        this.articles = response.articles;
-        this.articlesCount = response.articlesCount;
+        await this.getArticles();
         this.isLoading = false;
         this.displayNotification('SUCCESS', 'Article deleted successfuly')
       } catch (error) {
@@ -300,7 +294,7 @@ export default {
     presentDate(date) {
       let days = ['Jan', 'Feb', 'Mar', 'Apr', 'May', "Jun", 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
       let newDate = new Date(date);
-      return days[newDate.getMonth()] + ' ' + newDate.getDay() + ', ' + newDate.getFullYear();
+      return days[newDate.getMonth()] + ' ' + newDate.getDay() + ' ,' + newDate.getFullYear();
     }
   }
 };
@@ -327,5 +321,21 @@ export default {
   display: block;
   width: 100%;
   overflow-x: auto;
+}
+
+@media (max-width: 550px) {
+.last-col {
+  text-align: center;
+}
+
+.last-col span {
+  white-space: nowrap;
+}
+
+.dropdown {
+  margin: 11px auto 0 !important;
+  display: block;
+  float: none !important;
+}
 }
 </style>

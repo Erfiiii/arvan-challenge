@@ -12,7 +12,7 @@
       <li class="nav-item text-nowrap">
         <button
           @click="logout"
-          class="nav-link btn text-info py-1 px-2 rounded border border-info"
+          class="nav-link btn text-info py-1 px-3 rounded border border-info"
         >
           Logout
         </button>

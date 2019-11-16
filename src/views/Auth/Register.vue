@@ -40,6 +40,7 @@
 
 <script>
 import InputCm from "../../components/UI/Input";
+import errorHandler from "../../services/exceptions";
 
 export default {
   name: "login",
@@ -75,6 +76,7 @@ export default {
         this.loadingState = false;
 
       } catch (error) {
+        this.displayNotification('DANGER', errorHandler(error).message)
         this.loadingState = false;
 
         throw error;

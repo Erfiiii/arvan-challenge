@@ -68,6 +68,16 @@ export default {
   z-index: 100000001;
 }
 
+@media (max-width: 550px) {
+.alert {
+  width: 100%;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  top: auto;
+}
+}
+
 .alert.is-active {
   display: block;
 }

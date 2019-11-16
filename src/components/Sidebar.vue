@@ -8,7 +8,7 @@
         <router-link
           :class="{ active: route === 'ROUTE_HOME' || route === 'ROUTE_ARTICLES'}"
           :to="{ name: 'ROUTE_HOME' }"
-          class="nav-link text-white"
+          class="nav-link text-white pl-4"
           >All Articles</router-link
         >
       </li>
@@ -16,7 +16,7 @@
         <router-link
           :class="{ active: route === 'ROUTE_ADD_ARTICLE' }"
           :to="{ name: 'ROUTE_ADD_ARTICLE' }"
-          class="nav-link text-white"
+          class="nav-link text-white pl-4"
           >New Article</router-link
         >
       </li>

@@ -29,6 +29,7 @@
 <script>
 
 import InputCm from '../../components/UI/Input';
+import errorHandler from "../../services/exceptions";
 export default {
   name: "login",
   data() {
@@ -48,6 +49,8 @@ export default {
   },
   methods: {
     async onLogin() {
+      try {
+
       this.loadingState = true;
 
       let data = {
@@ -56,7 +59,6 @@ export default {
           email: this.email
         }
       };
-      try {
         await this.$store.dispatch("loginUser", data);
           this.displayNotification('SUCCESS', 'Well Done! you logged in successfully!')
 
@@ -65,6 +67,7 @@ export default {
 
       } catch (error) {
         this.loadingState = false;
+        this.displayNotification('DANGER', errorHandler(error).message)
         throw error;
       }
     }

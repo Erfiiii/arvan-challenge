@@ -59,8 +59,10 @@
             @click.prevent="createArticle"
             type="submit"
             class="btn btn-primary"
+            style="width:90px"
           >
-            Submit
+          <span v-if="loadingState" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+          <span v-else>Submit</span>
           </button>
         </div>
         <div
@@ -87,7 +89,8 @@ export default {
       tag: "",
       tagList: [],
       selectedTags: [],
-      tagLoading: false
+      tagLoading: false,
+      loadingState: false
     };
   },
   components: {
@@ -110,6 +113,7 @@ export default {
   methods: {
     async createArticle() {
       try {
+        this.loadingState = true;
         this.tags ? this.selectedTags.push(this.tag) : false;
         let data = {
           article: {
@@ -124,7 +128,10 @@ export default {
           data
         );
         this.$router.push({ name: "ROUTE_HOME" });
+        this.loadingState = false;
+        this.displayNotification('SUCCESS', 'Well done! Article created successfuly')
       } catch (error) {
+        this.loadingState = false;
         throw error;
       }
     }

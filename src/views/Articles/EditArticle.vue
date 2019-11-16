@@ -64,7 +64,8 @@
             type="submit"
             class="btn btn-primary"
           >
-            Submit
+          <span v-if="isLoading" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+          <span v-else>Submit</span>
           </button>
         </div>
         <div
@@ -138,6 +139,7 @@ export default {
     },
     async onEditArticle() {
       try {
+        this.isLoading = true;
         this.selectedTags.push(this.tag);
 
         let data = {
@@ -153,7 +155,10 @@ export default {
           data
         );
         this.$router.push({ name: "ROUTE_HOME" });
+        this.isLoading = false;
+        this.displayNotification('SUCCESS', 'Well done! Article updated successfuly')
       } catch (error) {
+        this.isLoading = false;
         throw error;
       }
     }

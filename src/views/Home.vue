@@ -63,10 +63,7 @@
                   </td>
                   <td class="inline-block px-2 py-3 align-middle">
                     <span
-                      >{{ new Date(article.updatedAt).getFullYear() }},
-                      {{ new Date(article.updatedAt).getMonth() }},{{
-                        new Date(article.updatedAt).getDay()
-                      }}</span
+                      >{{presentDate(article.updatedAt)}}</span
                     >
                     <div class="dropdown ml-5 float-right">
                       <button
@@ -292,12 +289,18 @@ export default {
         this.articles = response.articles;
         this.articlesCount = response.articlesCount;
         this.isLoading = false;
+        this.displayNotification('SUCCESS', 'Article deleted successfuly')
       } catch (error) {
         throw error;
       }
     },
     onCloseDeleteModal() {
       this.selectedToDeleteSlug = null;
+    },
+    presentDate(date) {
+      let days = ['Jan', 'Feb', 'Mar', 'Apr', 'May', "Jun", 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+      let newDate = new Date(date);
+      return days[newDate.getMonth()] + ' ' + newDate.getDay() + ', ' + newDate.getFullYear();
     }
   }
 };

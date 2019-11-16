@@ -39,12 +39,13 @@
                   type="text"
                   class="form-control"
                   placeholder="New Tag"
+                  @blur="pushNewTag"
                 />
               </div>
               <div class="form-group tag-list border border-black rounded p-3">
                 <div
                   class="custom-control custom-checkbox my-1 mr-sm-2"
-                  v-for="(tag, i) in tagList"
+                  v-for="(tag, i) in presentTags(tagList)"
                   :key="i"
                 >
                   <input
@@ -79,7 +80,7 @@
 <script>
 import { HttpService } from "../../services/apiService";
 import { Endpoints } from "../../services/apiService/routes";
-
+import errorHandler from "../../services/exceptions";
 import InputCm from "../../components/UI/Input";
 
 
@@ -140,8 +141,6 @@ export default {
     async onEditArticle() {
       try {
         this.isLoading = true;
-        this.selectedTags.push(this.tag);
-
         let data = {
           article: {
             title: this.title,
@@ -159,8 +158,28 @@ export default {
         this.displayNotification('SUCCESS', 'Well done! Article updated successfuly')
       } catch (error) {
         this.isLoading = false;
+        this.displayNotification('DANGER', errorHandler(error).message)
         throw error;
       }
+    },
+    pushNewTag() {
+      if(this.tag) {
+        this.tagList.push(this.tag);
+        this.selectedTags.push(this.tag);
+        this.tag = null;
+      }
+    },
+    presentTags(tags) {
+      tags.sort(function (a, b) {
+          if (a > b) {
+              return 1;
+          }
+          if (b > a) {
+              return -1;
+          }
+          return 0;
+      });
+      return tags;
     }
   }
 };

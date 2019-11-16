@@ -16,9 +16,10 @@
           class=" justify-content-between full-width align-items-center pt-3 pb-2 mb-3"
         >
           <div class="w-100">
-            <h1 class="h2">All Posts</h1>
+            <h1 v-if="articles.length" class="h2">All Posts</h1>
+            <h1 v-else>You have no articles. Add some!</h1>
           </div>
-          <div class="table-responsive">
+          <div v-if="articles.length" class="table-responsive">
             <table class="table table-sm">
               <thead class="thead-light">
                 <tr class="p-2">
@@ -91,9 +92,9 @@
                         >
                         <button
                           data-toggle="modal"
-                          data-target="#exampleModalCenter"
+                          data-target="#modal"
                           class="dropdown-item"
-                          @click="onDeleteAction(article.slug)"
+                          @click="onDeleteAction(article)"
                         >
                           Delete
                         </button>
@@ -277,10 +278,14 @@ export default {
         this.isLoading = true;
         await HttpService.deleteRequest(
           Endpoints.get(Endpoints.ROUTE_DELETE_ARTICLE, {
-            slug: this.selectedToDeleteSlug
+            slug: this.selectedToDeleteSlug.slug
           })
         );
         this.$refs.articleDeleteModal.close();
+        if(this.articles[0].slug === this.selectedToDeleteSlug.slug && this.pageNumber - 1>0) {
+          this.$router.push({ name: "ROUTE_ARTICLES", params: { page: this.pageNumber - 1 } })
+          return;
+        }
         await this.getArticles();
         this.isLoading = false;
         this.displayNotification('SUCCESS', 'Article deleted successfuly')

@@ -41,7 +41,7 @@
                 <div
                   v-else
                   class="custom-control custom-checkbox my-1 mr-sm-2"
-                  v-for="(tag, i) in presentTags(tagList)"
+                  v-for="(tag, i) in tagList"
                   :key="i"
                 >
                   <input
@@ -104,7 +104,7 @@ export default {
       let response = await HttpService.getRequest(
         Endpoints.get(Endpoints.ROUTE_GET_TAGS)
       );
-      this.tagList = response.tags;
+      this.tagList = this.presentTags(response.tags);
       this.tagLoading = false;
     } catch (error) {
       this.tagLoading = false;
@@ -140,7 +140,7 @@ export default {
     },
     pushNewTag() {
       if(this.tag) {
-        this.tagList.push(this.tag);
+        this.tagList.unshift(this.tag);
         this.selectedTags.push(this.tag);
         this.tag = null;
       }
